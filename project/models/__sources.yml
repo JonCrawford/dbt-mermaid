@@ -2,7 +2,7 @@ version: 2
 
 sources:
   - name: source
-    database: postgres
+    database: "{{ target.database }}"
     tables:
       - name: events
       - name: users
