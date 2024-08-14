@@ -80,8 +80,8 @@ async function preprocess() {
     .catch(() => {}); // NOP
 
   await fs.writeFile(profiles, JSON.stringify(dummyProfile(obj.profile)));
-  await exec(`pipx run --spec dbt-postgres==${dbtVersion} dbt deps`);
-  await exec(`pipx run --spec dbt-postgres==${dbtVersion} dbt ls`);
+  await exec(`pipx run --spec dbt-snowflake==${dbtVersion} dbt deps`);
+  await exec(`pipx run --spec dbt-snowflake==${dbtVersion} dbt ls`);
 
   await cleanup();
 }
