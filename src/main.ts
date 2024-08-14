@@ -61,13 +61,21 @@ function dummyProfile(profile: string) {
 async function preprocess() {
   const dbtVersion = core.getInput("dbt-version");
   const profiles = "profiles.yml";
+  
+  // Debugging: Confirm the version and profiles setup
+  console.log(`DBT Version: ${dbtVersion}`);
+  console.log(`Profiles Path: ${profiles}`);
+
   const obj = await fs
     .readFile("./dbt_project.yml")
     .then((buf) => buf.toString())
     .then((str) => yaml.load(str));
+
   if (!isDBTProjectYml(obj)) {
     throw "cannot read profile name from dbt_project.yml";
   }
+
+  console.log("DBT Project YML successfully loaded.");
 
   let cleanup = async () => await fs.unlink(profiles);
   await fs
@@ -80,8 +88,8 @@ async function preprocess() {
     .catch(() => {}); // NOP
 
   await fs.writeFile(profiles, JSON.stringify(dummyProfile(obj.profile)));
+  console.log(`Profiles file written to ${profiles}`);
 
-  // Debugging output to verify what's happening
   console.log(`Running dbt deps with version: dbt-snowflake==${dbtVersion}`);
   await exec(`pipx run --spec dbt-snowflake==${dbtVersion} dbt deps`);
 
