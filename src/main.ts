@@ -1,3 +1,9 @@
+import { execSync } from 'child_process';
+
+// Log a custom message to verify the commit
+const commitHash = execSync('git rev-parse HEAD').toString().trim();
+console.log(`Running dbt-mermaid from my fork. Commit SHA: ${commitHash}`);
+
 import * as fs from "fs/promises";
 import * as core from "@actions/core";
 import * as process from "process";
