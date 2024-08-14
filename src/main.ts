@@ -80,7 +80,12 @@ async function preprocess() {
     .catch(() => {}); // NOP
 
   await fs.writeFile(profiles, JSON.stringify(dummyProfile(obj.profile)));
+
+  // Debugging output to verify what's happening
+  console.log(`Running dbt deps with version: dbt-snowflake==${dbtVersion}`);
   await exec(`pipx run --spec dbt-snowflake==${dbtVersion} dbt deps`);
+
+  console.log(`Running dbt ls with version: dbt-snowflake==${dbtVersion}`);
   await exec(`pipx run --spec dbt-snowflake==${dbtVersion} dbt ls`);
 
   await cleanup();
