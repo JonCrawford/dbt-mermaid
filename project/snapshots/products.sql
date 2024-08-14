@@ -1,7 +1,7 @@
 {% snapshot products_snapshot %}
     {{
         config(
-            target_database="postgres",
+            target_database="{{ target.database }}",
             target_schema="snapshot",
             unique_key="id",
             strategy="timestamp",
